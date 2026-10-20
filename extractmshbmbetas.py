@@ -1,16 +1,6 @@
 """
 Adapted from a script written by Ekaterina Torubarova, which was used in 
-the Torubarova et al. (2026) study on conversational rpoduction and comprehension.
-
-Extracts run-level TI and BI beta estimates from individualized MSHBM networks.
-1. Read SPM.mat and identify TI and BI regressors for each run.
-2. Load the corresponding volumetric beta images.
-3. Project each beta image onto fsaverage5.
-4. Load subject-specific LH and RH MSHBM masks.
-5. Extract beta values within each network.
-6. Average across LH and RH vertices.
-7. Retain run-level structure.
-8. Save one row per subject x run x network x condition.
+the Torubarova et al. (2026) study on conversational production and comprehension.
 """
 
 import os
@@ -22,7 +12,7 @@ from scipy.io import loadmat
 
 # CONFIGURATION
 
-BASE_DIR = '/Users/caroline/Desktop/Dissertation/TI_Backchannels'
+BASE_DIR = '/Users/caroline/Desktop/Dissertation/TI_Backchannels/ROIanalysis/'
 
 FIRSTLEVEL_DIR = os.path.join(
     BASE_DIR,
@@ -126,9 +116,6 @@ def identify_condition_regressors(regressors):
         # Identify condition
 
         condition = None
-
-        # Use the portion after ")" to avoid accidental matches
-        # elsewhere in the SPM regressor name.
         if ')' in lower:
             regressor_part = lower.split(')', 1)[1].strip()
         else:
@@ -142,8 +129,6 @@ def identify_condition_regressors(regressors):
 
         else:
             continue
-
-        # Identify run from Sn(X)
 
         run = None
 
@@ -161,8 +146,6 @@ def identify_condition_regressors(regressors):
                 f'  WARNING: Could not determine run for: {name}'
             )
             continue
-
-        # Corresponding beta image
 
         beta_index = i + 1
 
@@ -221,10 +204,9 @@ def extract_network_mean(
 
 def main():
 
-    print('==============================================')
     print('MSHBM surface ROI extraction')
     print('RUN-LEVEL TI AND BI BETAS')
-    print('==============================================')
+ 
 
     print(f'\nFirst-level directory: {FIRSTLEVEL_DIR}')
     print(f'Mask directory:        {MASKS_DIR}')
@@ -260,11 +242,7 @@ def main():
 
             continue
 
-        print('\n==============================================')
         print(f'Processing {sub_str}')
-        print('==============================================')
-
-        # Load SPM.mat
 
         spm_path = os.path.join(
             subject_dir,
@@ -283,8 +261,6 @@ def main():
         condition_regressors = identify_condition_regressors(
             regressors
         )
-
-        # Show what was identified
 
         print('\n  Identified regressors:')
 
@@ -476,9 +452,7 @@ def main():
             writer.writeheader()
             writer.writerows(results)
 
-        print('\n==============================================')
         print('DONE')
-        print('==============================================')
 
         print(
             f'Extracted {len(results)} '
