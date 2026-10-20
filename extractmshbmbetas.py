@@ -12,7 +12,7 @@ from scipy.io import loadmat
 
 # CONFIGURATION
 
-BASE_DIR = '/Users/caroline/Desktop/Dissertation/TI_Backchannels/ROIanalysis/'
+BASE_DIR = '/Users/caroline/Desktop/Dissertation/TI_Backchannels/'
 
 FIRSTLEVEL_DIR = os.path.join(
     BASE_DIR,
