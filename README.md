@@ -1,1 +1,1 @@
-Scripts used in the Backchannel and turn initiations study
+Scripts used in the backchannel vs. turn initiations study
